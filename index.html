@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voting System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen">
+    <main class="flex min-h-screen items-center justify-center px-4 py-10">
+      <div class="w-full max-w-5xl rounded-2xl border border-gray-300 bg-gray-300 p-8 shadow-2xl shadow-black/30 backdrop-blur">
+        <div class="mb-8 text-center">
+          <p class="mb-2 text-sm font-semibold uppercase tracking-[0.35em] text-blue-400">
+           Africa Plan Foundation Voting System
+          </p>
+          <h1 class="text-3xl font-bold sm:text-4xl text-blue-400">HOH Election</h1>
+          
+        </div>
+
+        <div class="">
+          <form id="vote-form" class="rounded-2xl border border-slate-800 bg-slate-800/70 p-6">
+            <h2 class="mb-4 text-xl font-semibold text-white">Vote Now</h2>
+            <div class="space-y-4">
+              <div>
+                <label for="voter-name" class="mb-2 block text-sm font-medium text-slate-300">
+                  Voter's Names
+                </label>
+                <select class="w-full rounded-xl border border-slate-700 bg-gray-400 px-4 py-3 text-sm text-white outline-none transition focus:border-blue-400">
+                  <option value="Amina">Majesty</option>
+                  <option value="Kwame">Austine</option>
+                  <option value="Selorm">Kosi</option>
+                  <option value="Amina">Victor</option>
+                  <option value="Kwame">Lilian</option>
+                  <option value="Selorm">Charles</option>
+                  <option value="Amina">Chris</option>
+                  <option value="Kwame">Bonaventure</option>
+                  <option value="Selorm">Abigail</option>
+                </select>
+                
+              </div>
+
+              <div>
+                <label for="candidate" class="mb-2 block text-sm font-medium text-slate-300">
+                  Choose Candidate
+                </label>
+                <select class="w-full rounded-xl border border-slate-700 bg-gray-400 px-4 py-3 text-sm text-white outline-none transition focus:border-blue-400">
+                  <option value="Kosi">Kosi</option>
+                  <option value="Austine">Austine</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="mt-6 w-full rounded-xl bg-gray-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-blue-400"
+            >
+              Submit Vote
+            </button>
+          </form>
+
+          
+        </div>
+
+        
+      </div>
+    </main>
+
+    <div class="flex flex-col fixed bottom-0 left-0 right-0 z-50 border border-slate-800 bg-slate-800/70 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <button
+            id="open-result-modal"
+            type="button"
+            class="rounded-xl border border-blue-400 px-4 py-3 font-semibold text-blue-400 transition hover:bg-emerald-500/10"
+          >
+            Check Result
+          </button>
+
+          <div class="text-m text-slate-400">
+            <span class="font-medium text-blue-400">Results:</span>
+            <p class= "text-blue-400">Austine: <span id="austResult">11</span></p>
+            <p class ="text-blue-400">Kosi: <span id="austResult">09</span></p>
+          </div>
+        </div>
+
+    <div id="result-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
+      <div class="w-full max-w-md rounded-2xl border border-slate-700 bg-gray-500 p-6 shadow-2xl">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-gray-100">Election Result</p>
+            <h3 class="mt-2 text-2xl font-semibold text-white">Winner</h3>
+          </div>
+          <button id="close-result-modal" type="button" class="text-xl text-slate-400 hover:text-white">
+            ×
+          </button>
+        </div>
+        <div class="mt-6 rounded-xl border border-slate-800 bg-gray-800 p-5 text-center">
+          <p id="winner-name" class="text-2xl font-semibold text-white">Our Winner is:</p>
+          <p class="mt-2 text-2xl text-slate-400">Austine</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const modal = document.getElementById('result-modal');
+      const openModalButton = document.getElementById('open-result-modal');
+      const closeModalButton = document.getElementById('close-result-modal');
+
+      openModalButton.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+
+      closeModalButton.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      });
+
+
+    </script>
+  </body>
+</html>
+
