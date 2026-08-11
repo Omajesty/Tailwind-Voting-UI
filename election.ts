@@ -1,0 +1,182 @@
+type PTypes = string | number | number[] | boolean;
+
+type TCandidate = "Augustine" | "Kosisochukwu";
+
+const candidates: TCandidate[] = ["Augustine", "Kosisochukwu"];
+const candidate = candidates[0];
+
+const voters = [
+  "Stephanie",
+  "Rita",
+  "James",
+  "Peter",
+  "Victor",
+  "Anthony",
+  "Charles",
+  "Augustine",
+  "Lillian",
+  "Gabriel",
+  "Christopher",
+  "Kosisochukwu",
+  "Bonaventure",
+  "Abigail",
+  "David",
+  "Amarachi",
+  "Loveth",
+  "Chidimma",
+  "Ifeanyi",
+  "Majesty",
+] as const;
+
+type TVoters = (typeof voters)[number];
+let voteCount: number = 0;
+
+type TPoll = Record<TCandidate, number>;
+
+const poll: TPoll = {
+  Augustine: 0,
+  Kosisochukwu: 0,
+};
+
+interface Result {
+  total: number;
+  winner: TCandidate;
+  poll: TPoll;
+}
+
+const result: Partial<Result> = {};
+
+const getResult = (): Partial<Result> => result;
+const getWinner = (): TCandidate | undefined => result.winner;
+const checkResult = (candidate: TCandidate): number | undefined =>
+  result.poll?.[candidate];
+
+const votingRecord: Record<TVoters, TCandidate> = {
+  Stephanie: "Kosisochukwu",
+  Rita: "Kosisochukwu",
+  James: "Kosisochukwu",
+  Peter: "Kosisochukwu",
+  Victor: "Augustine",
+  Anthony: "Kosisochukwu",
+  Charles: "Kosisochukwu",
+  Augustine: "Kosisochukwu",
+  Lillian: "Augustine",
+  Gabriel: "Kosisochukwu",
+  Christopher: "Kosisochukwu",
+  Kosisochukwu: "Kosisochukwu",
+  Bonaventure: "Augustine",
+  Abigail: "Augustine",
+  David: "Kosisochukwu",
+  Amarachi: "Kosisochukwu",
+  Loveth: "Kosisochukwu",
+  Chidimma: "Augustine",
+  Ifeanyi: "Kosisochukwu",
+  Majesty: "Augustine",
+};
+
+const determineWinner = (): TCandidate => {
+  const entries = Object.entries(result.poll ?? poll) as [TCandidate, number][];
+
+  const winnerEntry = entries.reduce<[TCandidate, number]>(
+    (highest, [candidate, votes]) =>
+      votes > highest[1] ? [candidate, votes] : highest,
+    ["Augustine", -1],
+  );
+
+  return winnerEntry[0];
+};
+
+const renderResults = () => {
+  const currentPoll = result.poll ?? poll;
+  const augustineVotes = currentPoll.Augustine;
+  const kosisochukwuVotes = currentPoll.Kosisochukwu;
+
+  const augustineResultEl = document.getElementById("augustine-result");
+  if (augustineResultEl) {
+    augustineResultEl.textContent = String(augustineVotes);
+  }
+
+  const kosisochukwuResultEl = document.getElementById("kosisochukwu-result");
+  if (kosisochukwuResultEl) {
+    kosisochukwuResultEl.textContent = String(kosisochukwuVotes);
+  }
+
+  const winnerValueEl = document.getElementById("winner-value");
+  if (winnerValueEl) {
+    winnerValueEl.textContent = result.winner ?? determineWinner();
+  }
+
+  const winnerNameEl = document.getElementById("winner-name");
+  if (winnerNameEl) {
+    winnerNameEl.textContent = `Our Winner is: ${result.winner ?? determineWinner()}`;
+  }
+};
+
+const vote = (voter: TVoters, selectedCandidate?: TCandidate) => {
+  const whichCandidate = selectedCandidate ?? votingRecord[voter];
+
+  if (result.poll) {
+    result.poll[whichCandidate] = (result.poll[whichCandidate] ?? 0) + 1;
+  } else {
+    result.poll = { ...poll };
+    result.poll[whichCandidate] = (result.poll[whichCandidate] ?? 0) + 1;
+  }
+
+  result.total = (result.total ?? 0) + 1;
+  result.winner = determineWinner();
+  renderResults();
+};
+
+const election = (votersList: readonly TVoters[]) => {
+  votersList.forEach((voter) => {
+    vote(voter);
+  });
+};
+
+const bindUi = () => {
+  if (typeof document === "undefined") return;
+
+  const form = document.getElementById("vote-form") as HTMLFormElement | null;
+  const voterSelect = document.getElementById(
+    "voter-name",
+  ) as HTMLSelectElement | null;
+  const candidateSelect = document.getElementById(
+    "candidate-select",
+  ) as HTMLSelectElement | null;
+  const feedbackEl = document.getElementById("vote-feedback");
+  const modal = document.getElementById("result-modal");
+  const openModalButton = document.getElementById("open-result-modal");
+  const closeModalButton = document.getElementById("close-result-modal");
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const voter = voterSelect?.value as TVoters | undefined;
+    const selectedCandidate = candidateSelect?.value as TCandidate | undefined;
+
+    if (!voter || !selectedCandidate) return;
+
+    vote(voter, selectedCandidate);
+
+    if (feedbackEl) {
+      feedbackEl.textContent = `${voter} voted for ${selectedCandidate}`;
+    }
+  });
+
+  openModalButton?.addEventListener("click", () => {
+    modal?.classList.remove("hidden");
+    modal?.classList.add("flex");
+  });
+
+  closeModalButton?.addEventListener("click", () => {
+    modal?.classList.add("hidden");
+    modal?.classList.remove("flex");
+  });
+};
+
+if (typeof document !== "undefined") {
+  bindUi();
+  renderResults();
+}
+
+export { getResult, getWinner, checkResult, vote, election };

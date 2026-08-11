@@ -6,116 +6,112 @@
     <title>Voting System</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen">
-    <main class="flex min-h-screen items-center justify-center px-4 py-10">
-      <div class="w-full max-w-5xl rounded-2xl border border-gray-300 bg-gray-300 p-8 shadow-2xl shadow-black/30 backdrop-blur">
+  <body class="min-h-screen text-slate-100">
+    <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+      <section class="w-full rounded-2xl border border-slate-700/70 bg-slate-900/80 p-6 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-8 lg:p-10">
         <div class="mb-8 text-center">
           <p class="mb-2 text-sm font-semibold uppercase tracking-[0.35em] text-blue-400">
-           Africa Plan Foundation Voting System
+            Africa Plan Foundation Voting System
           </p>
-          <h1 class="text-3xl font-bold sm:text-4xl text-blue-400">HOH Election</h1>
-          
+          <h1 class="text-3xl font-bold text-blue-400 sm:text-4xl">HOH Election</h1>
+          <p class="mx-auto mt-3 max-w-2xl text-sm text-slate-300 sm:text-base">
+            Cast your vote with confidence, we are not APC.
+          </p>
         </div>
 
-        <div class="">
-          <form id="vote-form" class="rounded-2xl border border-slate-800 bg-slate-800/70 p-6">
-            <h2 class="mb-4 text-xl font-semibold text-white">Vote Now</h2>
+        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
+          <form id="vote-form" class="rounded-2xl border border-slate-700/80 bg-slate-800/80 p-5 shadow-lg shadow-black/20 sm:p-6 lg:p-7">
+            <h2 class="mb-5 text-xl font-semibold text-white">Vote Now</h2>
             <div class="space-y-4">
               <div>
                 <label for="voter-name" class="mb-2 block text-sm font-medium text-slate-300">
                   Voter's Names
                 </label>
-                <select class="w-full rounded-xl border border-slate-700 bg-gray-400 px-4 py-3 text-sm text-white outline-none transition focus:border-blue-400">
-                  <option value="Amina">Majesty</option>
-                  <option value="Kwame">Austine</option>
-                  <option value="Selorm">Kosi</option>
-                  <option value="Amina">Victor</option>
-                  <option value="Kwame">Lilian</option>
-                  <option value="Selorm">Charles</option>
-                  <option value="Amina">Chris</option>
-                  <option value="Kwame">Bonaventure</option>
-                  <option value="Selorm">Abigail</option>
+                <select id="voter-name" class="w-full rounded-xl border border-slate-600 bg-slate-700/80 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30">
+                  <option value="Stephanie">Stephanie</option>
+                  <option value="Rita">Rita</option>
+                  <option value="James">James</option>
+                  <option value="Peter">Peter</option>
+                  <option value="Victor">Victor</option>
+                  <option value="Anthony">Anthony</option>
+                  <option value="Charles">Charles</option>
+                  <option value="Augustine">Augustine</option>
+                  <option value="Lillian">Lillian</option>
+                  <option value="Gabriel">Gabriel</option>
+                  <option value="Christopher">Christopher</option>
+                  <option value="Kosisochukwu">Kosisochukwu</option>
+                  <option value="Bonaventure">Bonaventure</option>
+                  <option value="Abigail">Abigail</option>
+                  <option value="David">David</option>
+                  <option value="Amarachi">Amarachi</option>
+                  <option value="Loveth">Loveth</option>
+                  <option value="Chidimma">Chidimma</option>
+                  <option value="Ifeanyi">Ifeanyi</option>
+                  <option value="Majesty">Majesty</option>
                 </select>
-                
               </div>
 
               <div>
-                <label for="candidate" class="mb-2 block text-sm font-medium text-slate-300">
+                <label for="candidate-select" class="mb-2 block text-sm font-medium text-slate-300">
                   Choose Candidate
                 </label>
-                <select class="w-full rounded-xl border border-slate-700 bg-gray-400 px-4 py-3 text-sm text-white outline-none transition focus:border-blue-400">
-                  <option value="Kosi">Kosi</option>
-                  <option value="Austine">Austine</option>
+                <select id="candidate-select" class="w-full rounded-xl border border-slate-600 bg-slate-700/80 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30">
+                  <option value="Kosisochukwu">Kosisochukwu</option>
+                  <option value="Augustine">Augustine</option>
                 </select>
               </div>
+
+              <p id="vote-feedback" class="text-sm text-slate-400"></p>
             </div>
 
             <button
               type="submit"
-              class="mt-6 w-full rounded-xl bg-gray-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-blue-400"
+              class="mt-6 w-full rounded-xl bg-blue-500 px-4 py-3 font-semibold text-white transition hover:bg-blue-400"
             >
               Submit Vote
             </button>
           </form>
 
-          
-        </div>
+          <img src="./img/left-bg.jpg" alt="Voting System" class="rounded-2xl object-cover" /> 
+           
+      </section>
 
-        
-      </div>
+      <footer class="mt-6 flex flex-col gap-4 rounded-2xl border border-slate-700/80 bg-slate-800/90 p-4 shadow-lg shadow-black/20 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <button
+          id="open-result-modal"
+          type="button"
+          class="rounded-xl border border-blue-400 px-4 py-3 font-semibold text-blue-400 transition hover:bg-blue-400/10"
+        >
+          Check Result
+        </button>
+
+        <div class="flex flex-wrap items-center gap-3 text-sm text-slate-300">
+          <span class="font-medium text-blue-400">Results:</span>
+          <span class="rounded-full bg-slate-700/80 px-3 py-1">Augustine: <span id="augustine-result" class="font-semibold text-white">0</span></span>
+          <span class="rounded-full bg-slate-700/80 px-3 py-1">Kosisochukwu: <span id="kosisochukwu-result" class="font-semibold text-white">0</span></span>
+        </div>
+      </footer>
     </main>
 
-    <div class="flex flex-col fixed bottom-0 left-0 right-0 z-50 border border-slate-800 bg-slate-800/70 p-4 sm:flex-row sm:items-center sm:justify-between">
-          <button
-            id="open-result-modal"
-            type="button"
-            class="rounded-xl border border-blue-400 px-4 py-3 font-semibold text-blue-400 transition hover:bg-emerald-500/10"
-          >
-            Check Result
-          </button>
-
-          <div class="text-m text-slate-400">
-            <span class="font-medium text-blue-400">Results:</span>
-            <p class= "text-blue-400">Austine: <span id="austResult">11</span></p>
-            <p class ="text-blue-400">Kosi: <span id="austResult">09</span></p>
-          </div>
-        </div>
-
     <div id="result-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
-      <div class="w-full max-w-md rounded-2xl border border-slate-700 bg-gray-500 p-6 shadow-2xl">
+      <div class="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-800 p-6 shadow-2xl">
         <div class="flex items-start justify-between">
           <div>
-            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-gray-100">Election Result</p>
-            <h3 class="mt-2 text-2xl font-semibold text-white">Winner</h3>
+            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-300">Election Result</p>
+            
           </div>
           <button id="close-result-modal" type="button" class="text-xl text-slate-400 hover:text-white">
             ×
           </button>
         </div>
-        <div class="mt-6 rounded-xl border border-slate-800 bg-gray-800 p-5 text-center">
+        <div class="mt-6 rounded-xl border border-slate-700 bg-slate-900 p-5 text-center">
           <p id="winner-name" class="text-2xl font-semibold text-white">Our Winner is:</p>
-          <p class="mt-2 text-2xl text-slate-400">Austine</p>
+          
         </div>
       </div>
     </div>
 
-    <script>
-      const modal = document.getElementById('result-modal');
-      const openModalButton = document.getElementById('open-result-modal');
-      const closeModalButton = document.getElementById('close-result-modal');
-
-      openModalButton.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      });
-
-      closeModalButton.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-      });
-
-
-    </script>
+    <script type="module" src="./election.js"></script>
   </body>
 </html>
 
